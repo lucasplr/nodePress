@@ -11,6 +11,6 @@ const Category = connection.define('categories', {
     }
 })
 
-Category.sync({force: true}) // forceful syncronize and recreate the table with the relations
+//Category.sync({force: true}) // forceful syncronize and recreate the table with the relations
 
 module.exports = Category

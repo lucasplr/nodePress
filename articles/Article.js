@@ -18,6 +18,6 @@ const Article = connection.define('articles', {
 Category.hasMany(Article)//One Category has many Articles
 Article.belongsTo(Category) //Article belongs to a Category 1 to 1 
 
-Article.sync({force: true})
+//Article.sync({force: true})
 
 module.exports = Article
