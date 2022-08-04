@@ -65,4 +65,17 @@ router.get('/admin/categories/edit/:id', (req,res) => {
     })
 })
 
+router.post('/categories/update', (req,res) => {
+    var title = req.body.title
+    var id = req.body.id
+
+    Category.update({title: title, slug: slugify(title)},{
+        where:{
+            id: id
+        }
+    }).then( () => {
+        res.redirect('/admin/categories')
+    })
+})
+
 module.exports = router
