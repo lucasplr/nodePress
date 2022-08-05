@@ -5,7 +5,9 @@ const Category = require('../categories/Category')
 const Article = require('./Article')
 
 router.get('/admin/articles', (req,res) => {
-    Article.findAll().then(articles => {
+    Article.findAll({
+        include: [{model: Category}]
+    }).then(articles => {
         res.render('admin/articles/index', {articles: articles})
     })
     
@@ -32,5 +34,15 @@ router.post('/articles/save', (req,res) => {
     })
 })
 
+router.post('/articles/delete', (req,res) => {
+    var id = req.body.id
+    Article.destroy({
+        where:{
+            id: id
+        }
+    }).then(() =>{
+        res.redirect('/admin/articles')
+    })
+})
 
 module.exports = router
