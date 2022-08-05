@@ -18,11 +18,6 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-app.get('/', (req,res) => {
-    res.render('index')
-    console.log('teste')
-})
-
 //database
 connection.authenticate().then(() => {
     console.log('Conexão feita com sucesso')
@@ -33,6 +28,12 @@ connection.authenticate().then(() => {
 app.use('/', categoriesController)
 
 app.use('/', articlesController)
+
+app.get('/', (req,res) => {
+    Article.findAll().then(articles => {
+        res.render('index', {articles: articles})
+    })
+})
 
 app.listen(8080, () => {
     console.log('Servidor rodando')
