@@ -8,15 +8,19 @@
             <h2>Editar artigo</h2>
         </div>
         <div class="card-body">
-            <form action="/articles/save" method="POST">
-                <input type="text" name="title" placeholder="Defina o titulo do artigo" class="form-control">
+            <form action="/articles/update" method="POST">
+                <input type="text" name="title" placeholder="Defina o titulo do artigo" class="form-control" value="<%= article.title %>">
                 <br>
-                <textarea name="body" id="article" cols="30" rows="10" class="form-control" placeholder="Escreva o artigo aqui!"></textarea>
+                <textarea name="body" id="article" cols="30" rows="10" class="form-control" placeholder="Escreva o artigo aqui!" value='<%= article.body %>'></textarea>
                 <br>
                 <label for="">Categoria</label>
                 <select name="category" id="" class="form-control">
                     <% categories.forEach( (category) => { %>
+                        <% if(category.id == article.categoryId){ %>    
+                        <option value="<%= category.id %>" selected><%= category.title %></option>
+                    <% } else { %>
                         <option value="<%= category.id %>"><%= category.title %></option>
+                    <% } %>
                     <% }) %>
                 </select>
                 <br>
@@ -28,12 +32,20 @@
     </div>
 </div>
 
+<div id="content" style="display: none;">
+    <%- article.body %>
+</div>
+
 <%- include ('../../partials/footer') %>
 
 <script src="/tinymce/tinymce.min.js"></script>
 <script>
     tinymce.init({
         selector: '#article',
-        plugins: 'advlist autolink link image lists print preview hr searchreplace wordcount fullscren insertdatetime media save table paste emoticons'
+        activeEditor: true,
+        plugins: ['advlist autolink link image lists print preview hr searchreplace wordcount fullscren insertdatetime media save table paste emoticons'],
+        init_instance_callback: () => {
+            tinymce.get('article').setContent($('#content').html())
+        }
     })
 </script>
