@@ -9,9 +9,10 @@
         </div>
         <div class="card-body">
             <form action="/articles/update" method="POST">
+                <input type="hidden" name="id" value="<%= article.id %>">
                 <input type="text" name="title" placeholder="Defina o titulo do artigo" class="form-control" value="<%= article.title %>">
                 <br>
-                <textarea name="body" id="article" cols="30" rows="10" class="form-control" placeholder="Escreva o artigo aqui!" value='<%= article.body %>'></textarea>
+                <textarea name="body" id="article" cols="30" rows="10" class="form-control" placeholder="Escreva o artigo aqui!"></textarea>
                 <br>
                 <label for="">Categoria</label>
                 <select name="category" id="" class="form-control">
