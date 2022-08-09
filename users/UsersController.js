@@ -39,7 +39,9 @@ router.post('/users/create', (req,res) => {
     })
 
 router.get('/admin/users', (req,res) => {
-    
+    if(req.session.user == undefined){
+        res.redirect('/')
+    }
     User.findAll().then(users => {
         res.render('admin/users/index', {users: users})
     })
@@ -67,7 +69,7 @@ router.post('/authenticate', (req,res) => {
                     id: user.id,
                     email: user.email
                 }
-                res.json(req.session.user)
+                res.redirect('/admin/articles')
             }else{
                 res.redirect('/login')
             }
@@ -76,6 +78,11 @@ router.post('/authenticate', (req,res) => {
             res.redirect('/login')
         }
     })
+})
+
+router.get('/logout', (req,res) => {
+    req.session.user = undefined
+    res.redirect('/')
 })
 
 module.exports = router
